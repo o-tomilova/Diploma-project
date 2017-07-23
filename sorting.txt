@@ -1,0 +1,7 @@
+http://prog-blog.ru/articles/filtering-and-sorting-of-the-elements-in-javascript/
+
+https://javascript.ru/forum/dom-window/49729-sortirovka-tovarov.html
+
+https://webformyself.com/sortirovka-tovarov-v-kataloge-internet-magazina/
+
+http://maksimslepov.ru/blog/goods-filter-with-javascript/

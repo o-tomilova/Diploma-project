@@ -1,0 +1,59 @@
+header {
+	padding: 10px 10px;
+	display: inline-block;
+	width: 100%;
+}
+.headLeft{
+	float: left;
+}
+
+header a {
+	padding: 0 15px;
+}
+
+.headRight {
+	float: right;
+}
+
+.tableContainer {
+	width: 80%;
+}
+
+.table {
+	background-color: lightblue;
+	width: 100%;
+	margin-top: 20px
+}
+
+.table td {
+	border-bottom: 1px solid grey;
+}
+
+input {
+	margin: 10px 0;
+}
+
+input[type="submit"] {
+	font-size: 20px;
+	outline: none;
+	width: 90px;
+	height: 30px;
+}
+textarea {
+	width: 300px;
+	height: 100px;
+}
+
+.hideBlock {
+	display: none;
+}
+
+.showBlock {
+	display: block;
+}
+
+#addBlock {
+	padding: 0 15px;
+	border: 1px dashed grey;
+	background-color: lightgrey;
+}
