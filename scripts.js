@@ -10,12 +10,12 @@ window.onload = function() {
 // -------------------------------products array---------------------
 
 	var products = [
-			item1 = {id: "1", name: "T-shirt", category: "clothes", description: "Cool summer T-shirt", price: "16.99"}, 
-			item2 = {id: "2", name: "Shorts", category: "clothes", description: "Cool summer shorts", price: "20"}, 
-			item3 = {id: "3", name: "Hawians", category: "shoes", description: "Nice beach flip-flops", price: "15"},
-			item4 = {id: "4", name: "Nacklace", category: "accessories", description: "Silver nacklace", price: "25"}, 
-			item5 = {id: "5", name: "Dress", category: "clothes", description: "Long sleeveless", price: "29.90"}, 
-			item6 = {id: "6", name: "Boots", category: "shoes", description: "Warm winter boots", price: "50"}];
+			{id: "1", name: "T-shirt", category: "clothes", description: "Cool summer T-shirt", price: "16.99"}, 
+			{id: "2", name: "Shorts", category: "clothes", description: "Cool summer shorts", price: "20"}, 
+			{id: "3", name: "Hawians", category: "shoes", description: "Nice beach flip-flops", price: "15"},
+			{id: "4", name: "Nacklace", category: "accessories", description: "Silver nacklace", price: "25"}, 
+			{id: "5", name: "Dress", category: "clothes", description: "Long sleeveless", price: "29.90"}, 
+			{id: "6", name: "Boots", category: "shoes", description: "Warm winter boots", price: "50"}];
 	console.log(products);
 
 // --------------------------adding a product ?????------------------
@@ -30,7 +30,7 @@ window.onload = function() {
 				myTable += "<tr class="+arr[i].category+" id="+arr[i].id+"><td>" + arr[i].id + "</td> <td>" + arr[i].name + "</td><td>" + arr[i].category + "</td><td>"
 				+ arr[i].description + "</td><td class='price'>" + arr[i].price + "</td></tr>";
 			}	
-		} else if (arr == descPriceArr) {
+		} else if (arr == ascPriceArr) {
 				myTable += arr;
 			}
 		
@@ -45,25 +45,26 @@ window.onload = function() {
 		addBlock.className = "showBlock";
 	});
 
-	function Product(id, name, category, description, price){
-		this.id = id;
-		this.name = name;
-		this.category = category;
-		this.description = description;
-		this.price = price;
-	}
+	// function Product(id, name, category, description, price){
+	// 	this.id = id;
+	// 	this.name = name;
+	// 	this.category = category;
+	// 	this.description = description;
+	// 	this.price = price;
+	// }
 
 	var item;
 
 	submitForm.addEventListener("click", function () {
-		var last = products.length;
-		var item = new Product(last, document['addForm']['name'].value, document['addForm']['category'].value, document['addForm']['desc'].value, document['addForm']['price'].value)
+		// var last = products.length;
+		// var item = new Product(last, document['addForm']['name'].value, document['addForm']['category'].value, document['addForm']['desc'].value, document['addForm']['price'].value)
 
-		products.push(item);
-		console.log(products[last]); // виводить останній доданий елемент
-		console.log(products);      // виводить всі товари включно з доданим
-		output(products); // товар НЕ відображається в табоиці  
+		// products.push(item);
+		// console.log(products[last]); // виводить останній доданий елемент
+		// console.log(products);      // виводить всі товари включно з доданим
+		// output(products); // товар НЕ відображається в табоиці  
 	});
+
 	cancelForm.addEventListener("click", function(){
 		alert("Do you want to discard changes?");
 		document.forms["addForm"].reset();
@@ -176,16 +177,15 @@ window.onload = function() {
 	
 	var allProducts = [].slice.call(productsTable.getElementsByTagName("td"));
 	
-
-	var priceArray = []; 
+	var priceArray = [];  //an array of td.price
 
 	for (var i = 0; i < allProducts.length; i++) {
 		if(allProducts[i].className == "price"){
-			priceArray.push(allProducts[i].parentElement);
+			priceArray.push(allProducts[i]);
 		}
 	} 
 
-	console.log(priceArray); // td.price need to refer to innerText
+	console.log(priceArray); // td.price
 
 	priceSort.onchange = setPriceSort;
 
@@ -195,28 +195,26 @@ window.onload = function() {
 		var priceSortType = priceSort.value;
 
 		if (priceSortType == "ascending") {
-			// if (products[i].style.display != "none") {    //сделать проверку на скрытые элементы
-			// 	alert("lower price first");	
-			// }
 
 			for (var i = 0; i < priceArray.length-1; i++) {        // метод пузырька для цен в priceArray 
-				var minPrice = priceArray[i].innerText;					   // теперь нужно поменять алгоритм вывода даных в таблицу
-				for (var j = i+1; j < priceArray.length; j++) {	   // возможно добавить аргумент в функцию output() и передавать новый массив??	
+				var minPrice = priceArray[i].innerText;					   
+				for (var j = i+1; j < priceArray.length; j++) {	 	
 				 	if (priceArray[j].innerText<minPrice) {			
-				 		var min = priceArray[i].innerText;
+				 		var temp = priceArray[i].innerText;
 				 		minPrice = priceArray[j].innerText;
 				 		priceArray[i].innerText = minPrice;
-				 		priceArray[j].innerText = min;
-				 	} 		
+				 		priceArray[j].innerText = temp;
 
+				 		for (var i = 0; i < priceArray.length; i++) {
+							ascPriceArr.push(priceArray[i].parentElement);
+							console.log(priceArray[i].parentElement);
+						}
+				 	} 		
 				 } 
 			}
-				 	for (var i = 0; i < priceArray.length; i++) {
-						ascPriceArr.push(priceArray[i]);
-					}	
-
+			 		
 		console.log(ascPriceArr);
-		// output(descPriceArr);
+		output(ascPriceArr);
 
 		} else if (priceSortType == "descending"){
 			alert("lower first");
@@ -224,9 +222,6 @@ window.onload = function() {
 			alert("hi");
 		}
 	}
-
-
-
 
 
 } //window.onload
