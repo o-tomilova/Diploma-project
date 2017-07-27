@@ -23,17 +23,12 @@ window.onload = function() {
 	output = function(arr){ 
 
 		var myTable = "<div><table id='productsTable' class='table'><thead align='left'>";
-		myTable += "<th>ID</th> <th>Product name</th> <th>Category</th> <th>Description</th> <th>Price $</th> </thead>";
+		myTable += "<th>ID</th> <th>Product name</th> <th>Category</th> <th>Description</th> <th id='priceTH' data-type='number'>Price $</th> </thead>";
 		myTable += "<tbody>"
-		if (arr == products) {
 			for (var i = 0; i < arr.length; i++) {
 				myTable += "<tr class="+arr[i].category+" id="+arr[i].id+"><td>" + arr[i].id + "</td> <td>" + arr[i].name + "</td><td>" + arr[i].category + "</td><td>"
 				+ arr[i].description + "</td><td class='price'>" + arr[i].price + "</td></tr>";
-			}	
-		} else if (arr == ascPriceArr) {
-				myTable += arr;
 			}
-		
 		myTable += "</tbody> </table> </div>";
 		tableContainer.innerHTML = myTable;
 	}		
@@ -173,55 +168,52 @@ window.onload = function() {
 // --------------------------price sort---------------------------
 
 	var priceSort = document.getElementById("priceSort");
-	var productsTable = document.getElementById("productsTable"); 
-	
-	var allProducts = [].slice.call(productsTable.getElementsByTagName("td"));
-	
-	var priceArray = [];  //an array of td.price
+	var productsTable = document.getElementById("productsTable");
+ 	var priceCell = document.getElementById("priceTH");
 
-	for (var i = 0; i < allProducts.length; i++) {
-		if(allProducts[i].className == "price"){
-			priceArray.push(allProducts[i]);
-		}
-	} 
+	priceSort.onchange = function(){ 
+    	sortByPrice(4, priceSort.value);
+  	};
 
-	console.log(priceArray); // td.price
 
-	priceSort.onchange = setPriceSort;
 
-	var ascPriceArr = [];
+	function sortByPrice(colNum, type){
+    	var tbody = productsTable.getElementsByTagName('tbody')[0];
+    	var priceRowsArr = [].slice.call(tbody.rows);
+    	var compare;  
+    
+    switch (type) {
+        case 'ascending':
+        compare = function(rowA, rowB){
+          return rowA.cells[colNum].innerHTML - rowB.cells[colNum].innerHTML;
+        };
+    	break;
+    	case 'descending':
+        compare = function(rowA, rowB){
+          return rowB.cells[colNum].innerHTML - rowA.cells[colNum].innerHTML;
+        };
+    	break;
 
-	function setPriceSort(){
-		var priceSortType = priceSort.value;
+    		// !!!!! after output(products) sortByPrice stops working ???
 
-		if (priceSortType == "ascending") {
+    	case 'defaultPriceSort':
+    	compare = function(){
+    //		output(products);  
+    	};
+    	break;
+    }
+    
+    priceRowsArr.sort(compare);
+    
+    productsTable.removeChild(tbody);
+    
+    for (var i = 0; i < priceRowsArr.length; i++){
+      tbody.appendChild(priceRowsArr[i]);
+    }
+    
+    productsTable.appendChild(tbody);
 
-			for (var i = 0; i < priceArray.length-1; i++) {        // метод пузырька для цен в priceArray 
-				var minPrice = priceArray[i].innerText;					   
-				for (var j = i+1; j < priceArray.length; j++) {	 	
-				 	if (priceArray[j].innerText<minPrice) {			
-				 		var temp = priceArray[i].innerText;
-				 		minPrice = priceArray[j].innerText;
-				 		priceArray[i].innerText = minPrice;
-				 		priceArray[j].innerText = temp;
-
-				 		for (var i = 0; i < priceArray.length; i++) {
-							ascPriceArr.push(priceArray[i].parentElement);
-							console.log(priceArray[i].parentElement);
-						}
-				 	} 		
-				 } 
-			}
-			 		
-		console.log(ascPriceArr);
-		output(ascPriceArr);
-
-		} else if (priceSortType == "descending"){
-			alert("lower first");
-		} else if (priceSortType == "defaultPriceSort") {
-			alert("hi");
-		}
-	}
+  }
 
 
 } //window.onload
