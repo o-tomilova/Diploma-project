@@ -2,9 +2,7 @@ header {
 	padding: 10px 10px;
 	display: inline-block;
 	width: 100%;
-}
-.headLeft{
-	float: left;
+	background-color: lightgrey;
 }
 
 header a {
@@ -19,18 +17,26 @@ header a {
 	width: 80%;
 }
 
-.table {
-	background-color: lightblue;
-	width: 100%;
-	margin-top: 20px
+.btn-sm {
+	min-width: 60px;
 }
 
-.table td {
-	border-bottom: 1px solid grey;
+select {
+	min-width: 150px;
+	max-width: 300px;
 }
-
 input {
-	margin: 10px 0;
+	max-width: 300px;
+}
+
+textarea {
+	max-width: 300px;
+	max-height: 100px;
+	margin-bottom: 20px;
+}
+
+.form-inline {
+	display: inline-block;
 }
 
 input[type="submit"] {
@@ -39,10 +45,7 @@ input[type="submit"] {
 	width: 90px;
 	height: 30px;
 }
-textarea {
-	width: 300px;
-	height: 100px;
-}
+
 
 .hideBlock {
 	display: none;
@@ -53,7 +56,15 @@ textarea {
 }
 
 #addBlock {
-	padding: 0 15px;
+	padding: 0 50px;
 	border: 1px dashed grey;
-	background-color: lightgrey;
+	background-color: lightblue;
+}
+
+.error {
+	border-color: red;
+}
+
+.success {
+	border-color: green;
 }
